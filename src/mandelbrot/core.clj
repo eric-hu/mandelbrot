@@ -1,7 +1,6 @@
 (ns mandelbrot.core
   (:import java.awt.image.BufferedImage
-           (java.awt Color RenderingHints))
-  )
+           (java.awt Color RenderingHints)))
 
 (defn- escape
   "Returns an integer indicating how many iterations were required before the
@@ -54,10 +53,14 @@
     (println)))
 
 (defn render-image
-  "Does what it says bro, does what it says"
+  "Given a mandelbrot set membership grid as returned by a call to
+  `mandelbrot`, returns a BufferedImage with the same resolution as the grid
+  that uses a discrete grayscale color palette."
   [mandelbrot-grid]
   (let [palette (vec (for [c (range 500)]
-                       (Color/getHSBColor (/ (Math/log c) (Math/log 500)) (/ (Math/log 500) (Math/log c)) 0.5)))
+                       (Color/getHSBColor
+                         (/ (Math/log c) (Math/log 500))
+                         (/ (Math/log 500) (Math/log c)) 0.5)))
         height (count mandelbrot-grid)
         width (count (first mandelbrot-grid))
         img (BufferedImage. width height BufferedImage/TYPE_INT_RGB)
@@ -75,7 +78,7 @@
 
 
 
-(defn foo
+(defn -main
   "I don't do a whole lot."
   []
   (println "no args or errors")
